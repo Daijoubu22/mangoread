@@ -1,0 +1,10 @@
+@use '../../../scss/variables';
+
+.main {
+  color: variables.$mangoYellowColor;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}

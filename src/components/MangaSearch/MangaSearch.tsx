@@ -1,7 +1,7 @@
 import React from 'react';
 import searchManga from 'services/queries/searchMangaQueries';
 import Manga from 'services/models/Manga';
-import MangaView from 'components/Views/MangaView';
+import MangaView from 'components/Views/MangaView/MangaView';
 
 function MangaSearch() {
   const [mangaList, setMangaList] = React.useState([] as Manga[]);

@@ -1,0 +1,19 @@
+@use 'src/scss/variables';
+
+.main {
+  display: flex;
+  font-size: 14px;
+  color: variables.$textSecondaryColor;
+  > * {
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+  }
+  svg {
+    margin-right: 4px;
+  }
+}
+
+.rating {
+  color: variables.$mangoYellowColor;
+}

@@ -7,19 +7,14 @@ interface SearchMangaResponse {
   data: Manga[];
 }
 
-interface SearchMangaParams {
+export interface SearchMangaParams {
+  limit?: number;
+  offset?: number;
   order?: Record<string, Order>;
   includes?: Array<any>;
 }
 
-const params: SearchMangaParams = {
-  order: {
-    followedCount: Order.DESCENDING,
-  },
-  includes: ['cover_art'],
-};
-
-const searchManga = async (): Promise<Manga[]> => {
+const searchManga = async (params: SearchMangaParams): Promise<Manga[]> => {
   const manga = await axios.get<SearchMangaResponse>(`${API_URL}/manga`, { params });
   return manga.data.data;
 };

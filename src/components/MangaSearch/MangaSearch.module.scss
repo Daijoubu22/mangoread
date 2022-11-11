@@ -1,0 +1,11 @@
+@use 'src/scss/variables';
+
+.main {
+  padding-top: 128px;
+}
+
+.skeleton {
+  width: 1000px;
+  height: 364px;
+  background-color: variables.$bgSecondaryColor;
+}

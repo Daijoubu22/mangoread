@@ -24,7 +24,7 @@ function MangaInfoView({ manga, statistics, className }: MangaInfoProps) {
         {year}
       </p>
       <MangaStatisticsView statistics={statistics} />
-      <p className={styles.description}>{trimBeforeNewLine(description.en)}</p>
+      <p className={styles.description}>{description.en && trimBeforeNewLine(description.en)}</p>
     </div>
   );
 }

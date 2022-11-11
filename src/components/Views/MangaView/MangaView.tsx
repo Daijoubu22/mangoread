@@ -14,12 +14,12 @@ function MangaView({ manga, statistics }: MangaViewProps) {
   const coverUrl = getMangaCoverUrl(manga);
 
   return (
-    <li className={styles.main}>
+    <div className={styles.main}>
       <img src={coverUrl} alt="manga cover" className={styles.cover} />
       <div className={styles.bg} style={{ backgroundImage: `url("${coverUrl}")` }}>
         <MangaInfoView manga={manga} statistics={statistics} className={styles.info} />
       </div>
-    </li>
+    </div>
   );
 }
 

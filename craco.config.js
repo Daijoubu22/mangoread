@@ -5,6 +5,9 @@ const bgSecondaryColor = '#171717';
 const textPrimaryColor = '#FFFFFF';
 const textSecondaryColor = '#9D9D9D';
 const mangoYellowColor = '#FFE600';
+const mangoGreenColor = '#77D400';
+const mangoOrangeColor = '#FF6B00';
+const mangoGradient = `linear-gradient(45deg, ${mangoGreenColor} 0%, ${mangoYellowColor} 50%, ${mangoOrangeColor} 100%)`;
 
 module.exports = {
 	plugins: [

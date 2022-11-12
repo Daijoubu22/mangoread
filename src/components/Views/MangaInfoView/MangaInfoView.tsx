@@ -18,12 +18,13 @@ function MangaInfoView({ manga, statistics, className }: MangaInfoProps) {
 
   return (
     <div className={`${className} ${styles.main}`}>
-      <h2>{title.en}</h2>
+      <h2 className={styles.title}>{title.en}</h2>
       <p>
-        {author?.attributes && `${author.attributes.name} / `}
+        {author?.attributes && `${author.attributes.name}`}
+        {author?.attributes && year && ' / '}
         {year}
       </p>
-      <MangaStatisticsView statistics={statistics} />
+      {statistics && <MangaStatisticsView statistics={statistics} />}
       <p className={styles.description}>{description.en && trimBeforeNewLine(description.en)}</p>
     </div>
   );

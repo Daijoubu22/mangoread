@@ -8,13 +8,13 @@ import getStatistics from 'services/queries/statisticsQueries';
 import Statistics from 'services/models/Statistics';
 import { Pagination, Space } from 'antd';
 import SearchFilters from 'components/MangaSearch/SearchFilters/SearchFilters';
-import styles from './MangaSearch.module.scss';
+import styles from 'components/MangaSearch/MangaSearchPage.module.scss';
+import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils';
 
 const PAGE_SIZE = 10;
 
-function MangaSearch() {
+function MangaSearchPage() {
   const [mangaList, setMangaList] = useState([] as Manga[]);
-  const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(false);
   const [statistics, setStatistics] = useState({} as Record<MangaId, Statistics>);
   const [totalMangaCount, setTotalMangaCount] = useState(0);
@@ -23,19 +23,10 @@ function MangaSearch() {
       rating: Order.DESCENDING,
     },
     includes: [DataType.COVER_ART, DataType.AUTHOR],
-    offset: pageNumber - 1,
+    offset: 0,
     limit: PAGE_SIZE,
   };
   const [params, setParams] = useState(defaultParams);
-
-  useEffect(() => {
-    setParams((prevState) => (
-      {
-        ...prevState,
-        offset: pageNumber - 1,
-      }
-    ));
-  }, [pageNumber]);
 
   // search manga
   useEffect(() => {
@@ -58,7 +49,12 @@ function MangaSearch() {
   }, [mangaList]);
 
   const onPageChange = (page: number): void => {
-    setPageNumber(page);
+    setParams((prevState) => (
+      {
+        ...prevState,
+        offset: getOffsetFromPage(page, PAGE_SIZE),
+      }
+    ));
   };
 
   const onSearch = (searchParams: SearchMangaParams): void => {
@@ -66,6 +62,7 @@ function MangaSearch() {
       {
         ...prevState,
         title: searchParams.title,
+        offset: 0,
       }
     ));
   };
@@ -75,7 +72,7 @@ function MangaSearch() {
       total={totalMangaCount}
       defaultPageSize={PAGE_SIZE}
       showSizeChanger={false}
-      current={pageNumber}
+      current={params.offset ? getPageFromOffset(params.offset, PAGE_SIZE) : 1}
       onChange={onPageChange}
     />
   );
@@ -103,4 +100,4 @@ function MangaSearch() {
   );
 }
 
-export default MangaSearch;
+export default MangaSearchPage;

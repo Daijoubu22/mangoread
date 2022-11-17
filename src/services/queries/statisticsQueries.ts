@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { API_URL } from 'services/constants/constants';
-import { MangaId } from 'services/models/Manga';
 import Statistics from 'services/models/Statistics';
 
 interface SearchMangaResponse {
-  statistics: Record<MangaId, Statistics>;
+  statistics: Record<string, Statistics>;
 }
 
 export interface GetStatisticsParams {
-  manga?: MangaId[];
+  manga?: string[];
 }
 
-const getStatistics = async (params: GetStatisticsParams): Promise<Record<MangaId, Statistics>> => {
+const getStatistics = async (params: GetStatisticsParams): Promise<Record<string, Statistics>> => {
   const manga = await axios.get<SearchMangaResponse>(`${API_URL}/statistics/manga`, { params });
   return manga.data.statistics;
 };

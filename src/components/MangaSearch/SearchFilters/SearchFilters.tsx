@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input, Space } from 'antd';
-import { SearchMangaParams } from 'services/queries/searchMangaQueries';
+import { SearchMangaParams } from 'services/queries/mangaQueries';
 
 interface SearchFiltersProps {
   onSearch: (searchParams: SearchMangaParams) => void;

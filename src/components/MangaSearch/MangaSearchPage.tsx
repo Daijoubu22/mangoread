@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import searchManga, { SearchMangaParams } from 'services/queries/searchMangaQueries';
-import Manga, { MangaId } from 'services/models/Manga';
-import MangaView from 'components/Views/MangaView/MangaView';
+import { getMangaList, SearchMangaParams } from 'services/queries/mangaQueries';
+import Manga from 'services/models/Manga';
+import MangaView from 'components/views/MangaView/MangaView';
 import Order from 'services/enums/Order';
 import DataType from 'services/enums/DataType';
 import getStatistics from 'services/queries/statisticsQueries';
@@ -16,7 +16,7 @@ const PAGE_SIZE = 10;
 function MangaSearchPage() {
   const [mangaList, setMangaList] = useState([] as Manga[]);
   const [loading, setLoading] = useState(false);
-  const [statistics, setStatistics] = useState({} as Record<MangaId, Statistics>);
+  const [statistics, setStatistics] = useState<Record<string, Statistics>>();
   const [totalMangaCount, setTotalMangaCount] = useState(0);
   const defaultParams: SearchMangaParams = {
     order: {
@@ -31,10 +31,10 @@ function MangaSearchPage() {
   // search manga
   useEffect(() => {
     setLoading(true);
-    searchManga(params).then((response) => {
+    getMangaList(params).then((response) => {
       setTotalMangaCount(response.total);
       setMangaList(response.data);
-    });
+    }).finally(() => setLoading(false));
   }, [params]);
 
   // fetch statistics
@@ -45,7 +45,7 @@ function MangaSearchPage() {
     const mangaIds = mangaList.map((manga) => manga.id);
     getStatistics({ manga: mangaIds }).then((response) => {
       setStatistics(response);
-    }).finally(() => setLoading(false));
+    });
   }, [mangaList]);
 
   const onPageChange = (page: number): void => {
@@ -77,7 +77,7 @@ function MangaSearchPage() {
     />
   );
 
-  const mangaItems = (
+  const mangaItems = statistics && (
     mangaList.map((item) => (
       <MangaView manga={item} statistics={statistics[item.id]} key={item.id} />))
   );

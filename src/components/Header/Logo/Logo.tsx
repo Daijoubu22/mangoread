@@ -4,10 +4,10 @@ import styles from './Logo.module.scss';
 
 function Logo() {
   return (
-    <p className={styles.main}>
+    <span className={styles.main}>
       <LogoIcon width="20" />
       mangoread
-    </p>
+    </span>
   );
 }
 

@@ -18,18 +18,6 @@ module.exports = {
 					lessOptions: {
 						modifyVars: {
 							'@primary-color': mangoYellowColor,
-							'@primary-color-hover': textPrimaryColor,
-							'@primary-color-active': textPrimaryColor,
-							'@primary-color-outline': textPrimaryColor,
-							'@primary-1': 'green',
-							'@primary-2': 'blue',
-							'@primary-5': 'aqua', // to control the text color in many active and hover states
-							'@primary-6': 'blueviolet', // to control the text color of active buttons
-							'@primary-7': 'red',
-							'@primary-8': 'brown',
-							'@primary-9': 'lime',
-							'@primary-10': 'orange',
-							'@icon-color': textSecondaryColor,
 							'@border-style-base': 'none',
 							'@border-width-base': '0px',
 							'@border-radius-base': '1000px',
@@ -42,7 +30,17 @@ module.exports = {
 							'@heading-1-size': '48px',
 							'@heading-2-size': '32px',
 
-							'@btn-default-color': textSecondaryColor,
+							// BUTTON
+							'@btn-default-bg': bgSecondaryColor,
+
+							// INPUT
+							'@input-bg': bgSecondaryColor,
+
+							// PAGINATION
+							'@pagination-item-bg': bgSecondaryColor,
+							'@pagination-item-input-bg': bgSecondaryColor,
+							'@pagination-item-bg-active': bgSecondaryColor,
+							'@pagination-item-link-bg': bgSecondaryColor,
 						},
 						javascriptEnabled: true,
 					},

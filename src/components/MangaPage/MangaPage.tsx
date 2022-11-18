@@ -5,6 +5,7 @@ import Manga from 'services/models/Manga';
 import { getMangaCoverUrl } from 'services/utils/utils';
 import DataType from 'services/enums/DataType';
 import BlurredBg from 'components/ui/BlurredBg/BlurredBg';
+import MangaPageMainInfo from 'components/MangaPage/MangaPageMainInfo/MangaPageMainInfo';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -40,7 +41,7 @@ function MangaPage() {
       />
       <div className={styles.main}>
         <div className="container">
-          1
+          <MangaPageMainInfo manga={manga} />
         </div>
       </div>
       <div className={styles.additional}>

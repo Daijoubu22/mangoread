@@ -33,8 +33,9 @@ function MangaPage() {
       <BlurredBg
         imageUrl={getMangaCoverUrl(manga, 256)}
         blur={20}
-        darken={0.3}
+        brightness={0.7}
         style={{
+          width: '100%',
           height: '800px',
           position: 'fixed',
         }}

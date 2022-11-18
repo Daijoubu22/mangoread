@@ -4,7 +4,7 @@ import styles from './BlurredBg.module.scss';
 interface BlurredBgProps {
   imageUrl: string;
   blur?: number;
-  darken?: number;
+  brightness?: number;
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }
@@ -12,16 +12,18 @@ interface BlurredBgProps {
 function BlurredBg({
   imageUrl,
   blur,
-  darken,
+  brightness,
   style,
   children,
 }: BlurredBgProps) {
-  const backdrop = (blur || darken) && (
+  const blurFilter = blur ? `blur(${blur}px)` : '';
+  const brightnessFilter = brightness ? `brightness(${brightness})` : '';
+  const bg = (
     <div
-      className={styles.backdrop}
+      className={styles.bg}
       style={{
-        backgroundColor: `rgba(0, 0, 0, ${darken})`,
-        backdropFilter: `blur(${blur}px)`,
+        backgroundImage: `url(${imageUrl})`,
+        filter: `${blurFilter} ${brightnessFilter}`,
       }}
     />
   );
@@ -29,9 +31,9 @@ function BlurredBg({
   return (
     <div
       className={styles.main}
-      style={{ backgroundImage: `url(${imageUrl})`, ...style }}
+      style={style}
     >
-      {backdrop}
+      {bg}
       {children}
     </div>
   );
@@ -39,7 +41,7 @@ function BlurredBg({
 
 BlurredBg.defaultProps = {
   blur: undefined,
-  darken: undefined,
+  brightness: undefined,
   style: {},
   children: undefined,
 };

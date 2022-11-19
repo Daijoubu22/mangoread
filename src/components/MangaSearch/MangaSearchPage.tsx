@@ -2,31 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { getMangaList, SearchMangaParams } from 'services/queries/mangaQueries';
 import Manga from 'services/models/Manga';
 import MangaView from 'components/views/MangaView/MangaView';
-import Order from 'services/enums/Order';
-import DataType from 'services/enums/DataType';
 import getStatistics from 'services/queries/statisticsQueries';
 import Statistics from 'services/models/Statistics';
 import { Pagination, Space } from 'antd';
 import SearchFilters from 'components/MangaSearch/SearchFilters/SearchFilters';
 import styles from 'components/MangaSearch/MangaSearchPage.module.scss';
 import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils';
-
-const PAGE_SIZE = 10;
+import { useSearchParams } from 'react-router-dom';
+import { SEARCH_MANGA_PAGE_SIZE } from 'services/constants/constants';
+import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/utils';
 
 function MangaSearchPage() {
   const [mangaList, setMangaList] = useState([] as Manga[]);
   const [loading, setLoading] = useState(false);
   const [statistics, setStatistics] = useState<Record<string, Statistics>>();
   const [totalMangaCount, setTotalMangaCount] = useState(0);
-  const defaultParams: SearchMangaParams = {
-    order: {
-      rating: Order.DESCENDING,
-    },
-    includes: [DataType.COVER_ART, DataType.AUTHOR],
-    offset: 0,
-    limit: PAGE_SIZE,
+  const [queryParams, setQueryParams] = useSearchParams();
+  const [params, setParams] = useState(getSearchMangaParamsFromQuery(queryParams));
+
+  const updateParams = (newParams: SearchMangaParams) => {
+    setParams((prevState) => ({
+      ...prevState,
+      ...newParams,
+    }));
+    setQueryParams(getSearchMangaQueryParams(newParams));
   };
-  const [params, setParams] = useState(defaultParams);
 
   // search manga
   useEffect(() => {
@@ -49,30 +49,24 @@ function MangaSearchPage() {
   }, [mangaList]);
 
   const onPageChange = (page: number): void => {
-    setParams((prevState) => (
-      {
-        ...prevState,
-        offset: getOffsetFromPage(page, PAGE_SIZE),
-      }
-    ));
+    updateParams({
+      offset: getOffsetFromPage(page, SEARCH_MANGA_PAGE_SIZE),
+    });
   };
 
   const onSearch = (searchParams: SearchMangaParams): void => {
-    setParams((prevState) => (
-      {
-        ...prevState,
-        title: searchParams.title,
-        offset: 0,
-      }
-    ));
+    updateParams({
+      title: searchParams.title,
+      offset: 0,
+    });
   };
 
   const pagination = (
     <Pagination
       total={totalMangaCount}
-      defaultPageSize={PAGE_SIZE}
+      defaultPageSize={SEARCH_MANGA_PAGE_SIZE}
       showSizeChanger={false}
-      current={params.offset ? getPageFromOffset(params.offset, PAGE_SIZE) : 1}
+      current={params.offset ? getPageFromOffset(params.offset, SEARCH_MANGA_PAGE_SIZE) : 1}
       onChange={onPageChange}
     />
   );
@@ -82,7 +76,7 @@ function MangaSearchPage() {
       <MangaView manga={item} statistics={statistics[item.id]} key={item.id} />))
   );
 
-  const skeletons = Array.from({ length: PAGE_SIZE }, (_, index) => (
+  const skeletons = Array.from({ length: SEARCH_MANGA_PAGE_SIZE }, (_, index) => (
     <div key={index} className={styles.skeleton} />
   ));
 

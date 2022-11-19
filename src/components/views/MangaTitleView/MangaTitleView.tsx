@@ -13,7 +13,7 @@ function MangaTitleView({ manga }: MangaTitileViewProps) {
   return (
     <>
       <h2 className={styles.title}>{title.en}</h2>
-      <p>
+      <p className={styles.author}>
         {author?.attributes && `${author.attributes.name}`}
         {author?.attributes && year && ' / '}
         {year}

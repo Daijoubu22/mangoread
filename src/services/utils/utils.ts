@@ -10,13 +10,13 @@ export const getMangaAuthor = (manga: Manga): Author | undefined => (
   manga.relationships.find((item) => item.type === DataType.AUTHOR) as Author | undefined
 );
 
-export const getMangaCoverUrl = (manga: Manga, size?: ImageSize): string => {
-  const cover = manga.relationships.find((item) => item.type === DataType.COVER_ART);
-  if (!cover?.attributes) {
+export const getMangaCoverUrl = (manga: Manga, size?: ImageSize, cover?: Cover): string => {
+  const mangaCover = cover || manga.relationships.find((item) => item.type === DataType.COVER_ART);
+  if (!mangaCover?.attributes) {
     return '';
   }
   const postfix = size ? `.${size}.jpg` : '';
-  return `${UPLOADS_URL}/covers/${manga.id}/${(cover as Cover).attributes.fileName}${postfix}`;
+  return `${UPLOADS_URL}/covers/${manga.id}/${(mangaCover as Cover).attributes.fileName}${postfix}`;
 };
 
 export const getChapterImageUrl = (

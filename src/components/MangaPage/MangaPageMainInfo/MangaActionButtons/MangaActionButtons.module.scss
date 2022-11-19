@@ -1,0 +1,14 @@
+@use "src/scss/variables";
+
+.main button {
+  font-weight: 800;
+}
+
+.readButton {
+  background: variables.$mangoGradient;
+  box-shadow: variables.$mangoShadow;
+  &:hover, &:active, &:focus {
+    background: variables.$mangoGradient;
+    color: variables.$textPrimaryColor;
+  }
+}

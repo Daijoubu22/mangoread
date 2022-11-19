@@ -6,6 +6,12 @@ import { getMangaCoverUrl } from 'services/utils/utils';
 import DataType from 'services/enums/DataType';
 import BlurredBg from 'components/ui/BlurredBg/BlurredBg';
 import MangaPageMainInfo from 'components/MangaPage/MangaPageMainInfo/MangaPageMainInfo';
+import getStatistics from 'services/queries/statisticsQueries';
+import Statistics from 'services/models/Statistics';
+import MangaCoversSlider from 'components/MangaPage/MangaCoversSlider/MangaCoversSlider';
+import { getCoverList } from 'services/queries/coverQueries';
+import Cover from 'services/models/Cover';
+import Order from 'services/enums/Order';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -18,13 +24,28 @@ function MangaPage() {
     return <h1>Manga is not found(</h1>;
   }
   const [manga, setManga] = useState<Manga>();
+  const [statistics, setStatistics] = useState<Statistics>();
+  const [coverList, setCoverList] = useState<Cover[]>();
   const getMangaParams = {
-    includes: [DataType.COVER_ART],
+    includes: [DataType.COVER_ART, DataType.AUTHOR],
   } as GetMangaParams;
 
   useEffect(() => {
+    const getCoverListParams = {
+      manga: [mangaId],
+      order: {
+        volume: Order.ASCENDING,
+      },
+      limit: 100,
+    };
     getManga(mangaId, getMangaParams).then((response) => {
       setManga(response.data);
+    });
+    getStatistics({ manga: [mangaId] }).then((response) => {
+      setStatistics(response[mangaId]);
+    });
+    getCoverList(getCoverListParams).then((response) => {
+      setCoverList(response.data);
     });
   }, []);
 
@@ -42,12 +63,12 @@ function MangaPage() {
       />
       <div className={styles.main}>
         <div className="container">
-          <MangaPageMainInfo manga={manga} />
+          <MangaPageMainInfo manga={manga} statistics={statistics} />
         </div>
       </div>
       <div className={styles.additional}>
         <div className="container">
-          1
+          {coverList?.length && <MangaCoversSlider manga={manga} coverList={coverList} />}
         </div>
       </div>
     </>

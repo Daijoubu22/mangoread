@@ -25,7 +25,12 @@ function MangaView({ manga, statistics }: MangaViewProps) {
           size={256}
         />
       </Link>
-      <BlurredBg imageUrl={coverUrl} blur={20} brightness={0.5}>
+      <BlurredBg
+        imageUrl={coverUrl}
+        blur={20}
+        brightness={0.5}
+        style={{ width: '100%' }}
+      >
         <MangaInfoView manga={manga} statistics={statistics} className={styles.info} />
       </BlurredBg>
     </div>

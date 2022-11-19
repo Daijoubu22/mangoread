@@ -4,6 +4,8 @@ import MangaSearchPage from 'components/MangaSearch/MangaSearchPage';
 import './App.less';
 import { Route, Routes } from 'react-router-dom';
 import MangaPage from 'components/MangaPage/MangaPage';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   return (

@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Input, Space } from 'antd';
+import React from 'react';
+import {
+  Button,
+  Form,
+  Input,
+  Space,
+} from 'antd';
 import { SearchMangaParams } from 'services/queries/mangaQueries';
 
 interface SearchFiltersProps {
@@ -7,22 +12,40 @@ interface SearchFiltersProps {
 }
 
 function SearchFilters({ onSearch }: SearchFiltersProps) {
-  const [title, setTitle] = useState('');
-  const searchParams = {
-    title,
-  } as SearchMangaParams;
+  const onFinish = (value: any) => {
+    const searchParams = {
+      title: value.title,
+    } as SearchMangaParams;
+    onSearch(searchParams);
+  };
 
   return (
-    <Space direction="horizontal">
-      <Button>Filters</Button>
-      <Input
-        value={title}
-        onChange={(event) => { setTitle(event.target.value); }}
-        placeholder="Search manga..."
-        style={{ minWidth: '320px' }}
-      />
-      <Button type="primary" onClick={() => { onSearch(searchParams); }}>Search!</Button>
-    </Space>
+    <Form
+      name="search"
+      autoComplete="off"
+      onFinish={onFinish}
+    >
+      <Space direction="horizontal">
+        <Form.Item name="filters">
+          <Button>Filters</Button>
+        </Form.Item>
+        <Form.Item name="title">
+          <Input
+            placeholder="Search manga..."
+            style={{ minWidth: '320px' }}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="primaryButton"
+          >
+            Search!
+          </Button>
+        </Form.Item>
+      </Space>
+    </Form>
   );
 }
 

@@ -35,6 +35,16 @@ html {
   margin: 0 auto;
 }
 
+.primaryButton {
+  background: variables.$mangoGradient !important;
+  box-shadow: variables.$mangoShadow !important;
+  font-weight: 800 !important;
+  &:hover, &:active, &:focus {
+    background: variables.$mangoGradient !important;
+    color: variables.$textPrimaryColor !important;
+  }
+}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar {
   width: 16px;

@@ -9,7 +9,7 @@ interface MangaActionButtonsProps {
 function MangaActionButtons({ className }: MangaActionButtonsProps) {
   return (
     <Space className={`${styles.main} ${className}`} direction="horizontal">
-      <Button className={styles.readButton} size="large">Read!</Button>
+      <Button className={`${styles.readButton} primaryButton`} size="large">Read!</Button>
       <Button size="large">Chapters</Button>
       <Button size="large">Follow</Button>
     </Space>

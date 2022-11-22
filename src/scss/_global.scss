@@ -15,12 +15,6 @@ li {
   list-style-type: none;
 }
 
-// fix scrollbar spacing
-html {
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-}
-
 .App {
   min-height: 100vh;
   font-family: 'Montserrat', sans-serif;

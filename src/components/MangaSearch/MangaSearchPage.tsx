@@ -80,15 +80,27 @@ function MangaSearchPage() {
     <div key={index} className={styles.skeleton} />
   ));
 
+  const emptyMangaList = (
+    <h2>{'Didn\'t find anything😢'}</h2>
+  );
+
+  const mangaWithPagination = (
+    <>
+      {pagination}
+      <Space direction="vertical" size="large">
+        {loading ? skeletons : mangaItems}
+      </Space>
+      {pagination}
+    </>
+  );
+
   return (
     <div className={`${styles.main} container`}>
       <Space direction="vertical" size="middle">
         <SearchFilters onSearch={onSearch} />
-        {pagination}
-        <Space direction="vertical" size="large">
-          {loading ? skeletons : mangaItems}
-        </Space>
-        {pagination}
+        {mangaList.length
+          ? mangaWithPagination
+          : emptyMangaList}
       </Space>
     </div>
   );

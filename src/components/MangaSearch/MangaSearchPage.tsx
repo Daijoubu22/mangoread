@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMangaList, SearchMangaParams } from 'services/queries/mangaQueries';
-import Manga from 'services/models/Manga';
+import { SearchMangaParams } from 'services/queries/mangaQueries';
 import MangaView from 'components/views/MangaView/MangaView';
 import getStatistics from 'services/queries/statisticsQueries';
 import Statistics from 'services/models/Statistics';
@@ -11,14 +10,13 @@ import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_MANGA_PAGE_SIZE } from 'services/constants/constants';
 import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/utils';
+import useManga from 'hooks/useManga';
 
 function MangaSearchPage() {
-  const [mangaList, setMangaList] = useState([] as Manga[]);
-  const [loading, setLoading] = useState(false);
   const [statistics, setStatistics] = useState<Record<string, Statistics>>();
-  const [totalMangaCount, setTotalMangaCount] = useState(0);
   const [queryParams, setQueryParams] = useSearchParams();
   const [params, setParams] = useState(getSearchMangaParamsFromQuery(queryParams));
+  const { mangaList, loading, totalMangaCount } = useManga(params);
 
   const updateParams = (newParams: SearchMangaParams) => {
     setParams((prevState) => ({
@@ -28,16 +26,6 @@ function MangaSearchPage() {
     setQueryParams(getSearchMangaQueryParams(newParams));
   };
 
-  // search manga
-  useEffect(() => {
-    setLoading(true);
-    getMangaList(params).then((response) => {
-      setTotalMangaCount(response.total);
-      setMangaList(response.data);
-    }).finally(() => setLoading(false));
-  }, [params]);
-
-  // fetch statistics
   useEffect(() => {
     if (!mangaList.length) {
       return;

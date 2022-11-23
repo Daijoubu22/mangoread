@@ -6,6 +6,7 @@ import Author from 'services/models/Author';
 import { SearchMangaParams } from 'services/queries/mangaQueries';
 import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils';
 import Order from 'services/enums/Order';
+import OrderCategory from 'services/enums/OrderCategory';
 
 export type ImageSize = 256 | 512;
 
@@ -45,9 +46,7 @@ export const getSearchMangaParamsFromQuery = (queryParams: URLSearchParams): Sea
   const params: SearchMangaParams = {
     limit: SEARCH_MANGA_PAGE_SIZE,
     includes: [DataType.COVER_ART, DataType.AUTHOR],
-    order: {
-      rating: Order.DESCENDING,
-    },
+    [OrderCategory.RATING]: Order.DESCENDING,
     offset: page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0,
   };
   if (title) params.title = title;

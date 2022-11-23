@@ -3,19 +3,23 @@ import axios from 'axios';
 import { API_URL } from 'services/constants/constants';
 import Order from 'services/enums/Order';
 import DataType from 'services/enums/DataType';
+import OrderCategory from 'services/enums/OrderCategory';
 
-interface GetMangaListResponse {
+export interface GetMangaListResponse {
   data: Manga[];
   total: number;
 }
 
-export interface SearchMangaParams {
+type OrderParams = {
+  [key in OrderCategory]?: Order;
+};
+
+export type SearchMangaParams = OrderParams & {
   limit?: number;
   offset?: number;
   title?: string;
-  order?: Record<string, Order>;
   includes?: Array<DataType>;
-}
+};
 
 export interface GetMangaParams {
   includes?: Array<DataType>;

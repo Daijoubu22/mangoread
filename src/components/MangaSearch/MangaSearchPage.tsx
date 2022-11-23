@@ -10,13 +10,15 @@ import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_MANGA_PAGE_SIZE } from 'services/constants/constants';
 import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/utils';
-import useManga from 'hooks/useManga';
+import { useGetMangaListQuery } from 'store/api/mangaApi';
 
 function MangaSearchPage() {
   const [statistics, setStatistics] = useState<Record<string, Statistics>>();
   const [queryParams, setQueryParams] = useSearchParams();
   const [params, setParams] = useState(getSearchMangaParamsFromQuery(queryParams));
-  const { mangaList, loading, totalMangaCount } = useManga(params);
+  const { data, isFetching: loading } = useGetMangaListQuery(params);
+  const mangaList = data ? data.data : [];
+  const totalMangaCount = data ? data.total : 0;
 
   const updateParams = (newParams: SearchMangaParams) => {
     setParams((prevState) => ({

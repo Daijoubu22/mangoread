@@ -13,8 +13,11 @@ interface MangaCoversSliderProps {
 
 function MangaCoversSlider({ className, coverList, manga }: MangaCoversSliderProps) {
   const coverImgs = coverList.map((cover) => (
-    <div className={styles.coverWrapper}>
-      <img src={getMangaCoverUrl(manga, 256, cover)} alt="cover" />
+    <div key={cover.id} className={styles.coverWrapper}>
+      <img
+        src={getMangaCoverUrl(manga, 256, cover)}
+        alt="cover"
+      />
     </div>
   ));
 

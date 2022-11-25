@@ -1,7 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { mangaApi } from 'store/api/mangaApi';
+import mangaSearchReducer from 'store/reducers/mangaSearchReducer';
 
 const rootReducer = combineReducers({
+  mangaSearchReducer,
   [mangaApi.reducerPath]: mangaApi.reducer,
 });
 

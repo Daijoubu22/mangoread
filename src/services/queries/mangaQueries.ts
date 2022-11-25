@@ -29,11 +29,6 @@ interface GetMangaResponse {
   data: Manga;
 }
 
-export const getMangaList = async (params: SearchMangaParams): Promise<GetMangaListResponse> => {
-  const manga = await axios.get<GetMangaListResponse>(`${API_URL}/manga`, { params });
-  return manga.data;
-};
-
 export const getManga = async (
   mangaId: string,
   params: GetMangaParams,

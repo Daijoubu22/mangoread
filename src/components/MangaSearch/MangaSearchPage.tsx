@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SearchMangaParams } from 'services/queries/mangaQueries';
 import MangaView from 'components/views/MangaView/MangaView';
-import getStatistics from 'services/queries/statisticsQueries';
-import Statistics from 'services/models/Statistics';
 import { Pagination, Space } from 'antd';
 import SearchFilters from 'components/MangaSearch/SearchFilters/SearchFilters';
 import styles from 'components/MangaSearch/MangaSearchPage.module.scss';
@@ -10,38 +8,39 @@ import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils
 import { useSearchParams } from 'react-router-dom';
 import { SEARCH_MANGA_PAGE_SIZE } from 'services/constants/constants';
 import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/utils';
-import { useGetMangaListQuery } from 'store/api/mangaApi';
+import { useGetMangaListQuery } from 'redux/api/mangaApi';
 import useAppSelector from 'hooks/useAppSelector';
 import useAppDispatch from 'hooks/useAppDispatch';
-import { updateParams } from 'store/reducers/mangaSearchReducer';
+import { updateParams } from 'redux/slices/mangaSearchSlice';
+import { useGetStatisticsQuery } from 'redux/api/statisticsApi';
 
 function MangaSearchPage() {
-  const [statistics, setStatistics] = useState<Record<string, Statistics>>();
   const [queryParams, setQueryParams] = useSearchParams();
   const { params } = useAppSelector((state) => state.mangaSearchReducer);
-  const { data, isFetching: loading } = useGetMangaListQuery(params);
-  const mangaList = data ? data.data : [];
-  const totalMangaCount = data ? data.total : 0;
+  const { data: mangaResponse, isFetching: loading } = useGetMangaListQuery(params, {
+    skip: !params.includes,
+  });
+  const mangaList = mangaResponse ? mangaResponse.data : [];
+  const totalMangaCount = mangaResponse ? mangaResponse.total : 0;
+  const { data: statisticsResponse } = useGetStatisticsQuery({
+    manga: mangaList.map((item) => item.id),
+  }, {
+    skip: !mangaList.length,
+  });
+  const statistics = statisticsResponse?.statistics;
   const dispatch = useAppDispatch();
 
   const updateParamsWithQuery = (newParams: SearchMangaParams) => {
     dispatch(updateParams(newParams));
-    setQueryParams(getSearchMangaQueryParams(newParams));
+    setQueryParams(getSearchMangaQueryParams({
+      ...params,
+      ...newParams,
+    }));
   };
 
   useEffect(() => {
     dispatch(updateParams(getSearchMangaParamsFromQuery(queryParams)));
   }, []);
-
-  useEffect(() => {
-    if (!mangaList.length) {
-      return;
-    }
-    const mangaIds = mangaList.map((manga) => manga.id);
-    getStatistics({ manga: mangaIds }).then((response) => {
-      setStatistics(response);
-    });
-  }, [mangaList]);
 
   const onPageChange = (page: number): void => {
     updateParamsWithQuery({

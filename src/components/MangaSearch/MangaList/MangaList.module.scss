@@ -1,0 +1,7 @@
+@use 'src/scss/variables';
+
+.skeleton {
+  width: 1000px;
+  height: 364px;
+  background-color: variables.$bgSecondaryColor;
+}

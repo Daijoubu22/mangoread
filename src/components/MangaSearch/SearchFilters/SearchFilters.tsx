@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Form,
@@ -7,19 +7,22 @@ import {
 } from 'antd';
 import { SearchMangaParams } from 'services/queries/mangaQueries';
 import FiltersModal from 'components/MangaSearch/FiltersModal/FiltersModal';
+import useAppDispatch from 'hooks/useAppDispatch';
+import { updateParams } from 'redux/slices/mangaSearchSlice';
+import useAppSelector from 'hooks/useAppSelector';
 
-interface SearchFiltersProps {
-  onSearch: (searchParams: SearchMangaParams) => void;
-}
-
-function SearchFilters({ onSearch }: SearchFiltersProps) {
+function SearchFilters() {
+  const { params } = useAppSelector((state) => state.mangaSearchReducer);
+  const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onFinish = (value: any) => {
     const searchParams = {
       title: value.title,
+      offset: 0,
     } as SearchMangaParams;
-    onSearch(searchParams);
+    dispatch(updateParams(searchParams));
   };
 
   const handleFiltersButton = (): void => {
@@ -30,9 +33,14 @@ function SearchFilters({ onSearch }: SearchFiltersProps) {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    form.setFieldValue('title', params.title);
+  }, [params]);
+
   return (
     <>
       <Form
+        form={form}
         name="search"
         autoComplete="off"
         onFinish={onFinish}

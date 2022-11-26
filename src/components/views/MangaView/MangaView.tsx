@@ -10,7 +10,7 @@ import styles from './MangaView.module.scss';
 
 interface MangaViewProps {
   manga: Manga;
-  statistics: Statistics;
+  statistics: Statistics | undefined;
 }
 
 function MangaView({ manga, statistics }: MangaViewProps) {

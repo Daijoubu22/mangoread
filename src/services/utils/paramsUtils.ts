@@ -3,6 +3,14 @@ import { SEARCH_MANGA_PAGE_SIZE } from 'services/constants/constants';
 import DataType from 'services/enums/DataType';
 import OrderWithDirection from 'services/enums/OrderWithDirection';
 import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils';
+import ContentRating from 'services/enums/ContentRating';
+
+const defaultParams: SearchMangaParams = {
+  limit: SEARCH_MANGA_PAGE_SIZE,
+  includes: [DataType.COVER_ART, DataType.AUTHOR],
+  order: OrderWithDirection.RATING_DESCENDING,
+  contentRating: [ContentRating.SAFE, ContentRating.SUGGESTIVE],
+};
 
 export const getSearchMangaQueryParams = (params: SearchMangaParams): Record<string, string> => {
   const queryParams: Record<string, string> = {};
@@ -18,12 +26,8 @@ export const getSearchMangaParamsFromQuery = (queryParams: URLSearchParams): Sea
   const page = queryParams.get('page');
   const title = queryParams.get('title');
   const order = queryParams.get('order');
-  const params: SearchMangaParams = {
-    limit: SEARCH_MANGA_PAGE_SIZE,
-    includes: [DataType.COVER_ART, DataType.AUTHOR],
-    order: OrderWithDirection.RATING_DESCENDING,
-    offset: page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0,
-  };
+  const params = defaultParams;
+  params.offset = page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0;
   if (title) params.title = title;
   if (order) params.order = order as OrderWithDirection;
   return params;

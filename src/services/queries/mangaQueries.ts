@@ -4,6 +4,7 @@ import { API_URL } from 'services/constants/constants';
 import DataType from 'services/enums/DataType';
 import OrderWithDirection from 'services/enums/OrderWithDirection';
 import { transformParamsForRequest } from 'services/utils/paramsUtils';
+import ContentRating from 'services/enums/ContentRating';
 
 export interface GetMangaListResponse {
   data: Manga[];
@@ -16,6 +17,7 @@ export interface SearchMangaParams {
   title?: string;
   includes?: Array<DataType>;
   order?: OrderWithDirection;
+  contentRating?: Array<ContentRating>;
 }
 
 export interface GetMangaParams {

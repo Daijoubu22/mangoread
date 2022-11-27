@@ -4,10 +4,7 @@ import useAppSelector from 'hooks/useAppSelector';
 import OrderWithDirection from 'services/enums/OrderWithDirection';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { updateModalParams } from 'redux/slices/mangaSearchSlice';
-
-interface SortSelectProps {
-  className?: string;
-}
+import styles from './SortSelect.module.scss';
 
 const sortOptions = [
   {
@@ -28,29 +25,29 @@ const sortOptions = [
   },
 ];
 
-function SortSelect({ className }: SortSelectProps) {
+function SortSelect() {
   const { modalParams } = useAppSelector((state) => state.mangaSearchReducer);
   const dispatch = useAppDispatch();
 
   const handleChange = (value: OrderWithDirection): void => {
     dispatch(updateModalParams({
       order: value,
+      offset: 0,
     }));
   };
 
   return (
-    <Select
-      className={className}
-      style={{ width: '200px' }}
-      options={sortOptions}
-      value={modalParams.order}
-      onChange={handleChange}
-    />
+    <>
+      <span className={styles.label}>Order: </span>
+      <Select
+        className={styles.select}
+        style={{ width: '180px' }}
+        options={sortOptions}
+        value={modalParams.order}
+        onChange={handleChange}
+      />
+    </>
   );
 }
-
-SortSelect.defaultProps = {
-  className: undefined,
-};
 
 export default SortSelect;

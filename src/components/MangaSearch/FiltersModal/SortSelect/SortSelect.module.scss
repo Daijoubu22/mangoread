@@ -1,0 +1,11 @@
+@use 'src/scss/variables';
+
+.label {
+  margin-right: 12px;
+}
+
+.select {
+  :global(.ant-select-selector) {
+    background-color: variables.$bgModalItemsColor !important;
+  }
+}

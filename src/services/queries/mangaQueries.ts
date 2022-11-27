@@ -1,25 +1,22 @@
 import Manga from 'services/models/Manga';
 import axios from 'axios';
 import { API_URL } from 'services/constants/constants';
-import Order from 'services/enums/Order';
 import DataType from 'services/enums/DataType';
-import OrderCategory from 'services/enums/OrderCategory';
+import OrderWithDirection from 'services/enums/OrderWithDirection';
+import { transformParamsForRequest } from 'services/utils/paramsUtils';
 
 export interface GetMangaListResponse {
   data: Manga[];
   total: number;
 }
 
-type OrderParams = {
-  [key in OrderCategory]?: Order;
-};
-
-export type SearchMangaParams = OrderParams & {
+export interface SearchMangaParams {
   limit?: number;
   offset?: number;
   title?: string;
   includes?: Array<DataType>;
-};
+  order?: OrderWithDirection;
+}
 
 export interface GetMangaParams {
   includes?: Array<DataType>;
@@ -30,7 +27,10 @@ interface GetMangaResponse {
 }
 
 export const getMangaList = async (params: SearchMangaParams): Promise<GetMangaListResponse> => {
-  const manga = await axios.get<GetMangaListResponse>(`${API_URL}/manga`, { params });
+  const manga = await axios.get<GetMangaListResponse>(
+    `${API_URL}/manga`,
+    { params: transformParamsForRequest(params) },
+  );
   return manga.data;
 };
 

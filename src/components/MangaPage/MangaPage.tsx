@@ -11,8 +11,7 @@ import Statistics from 'services/models/Statistics';
 import MangaCoversSlider from 'components/MangaPage/MangaCoversSlider/MangaCoversSlider';
 import { getCoverList } from 'services/queries/coverQueries';
 import Cover from 'services/models/Cover';
-import Order from 'services/enums/Order';
-import OrderCategory from 'services/enums/OrderCategory';
+import OrderWithDirection from 'services/enums/OrderWithDirection';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -34,7 +33,7 @@ function MangaPage() {
   useEffect(() => {
     const getCoverListParams = {
       manga: [mangaId],
-      [OrderCategory.VOLUME]: Order.ASCENDING,
+      order: OrderWithDirection.VOLUME_ASCENDING,
       limit: 100,
     };
     getManga(mangaId, getMangaParams).then((response) => {

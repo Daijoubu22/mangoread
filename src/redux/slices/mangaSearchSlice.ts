@@ -9,6 +9,7 @@ interface MangaSearchState {
   statistics: Record<string, Statistics> | undefined;
   isLoading: boolean,
   params: SearchMangaParams,
+  modalParams: SearchMangaParams,
   error: string,
 }
 
@@ -18,6 +19,7 @@ const initialState: MangaSearchState = {
   statistics: undefined,
   isLoading: false,
   params: {},
+  modalParams: {},
   error: '',
 };
 
@@ -44,6 +46,9 @@ const mangaSearchSlice = createSlice({
     updateParams(state, action: PayloadAction<SearchMangaParams>) {
       state.params = { ...state.params, ...action.payload };
     },
+    updateModalParams(state, action: PayloadAction<SearchMangaParams>) {
+      state.modalParams = { ...state.modalParams, ...action.payload };
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   mangaFetchingSuccess,
   fetchingError,
   updateParams,
+  updateModalParams,
   statisticsFetchingSuccess,
 } = mangaSearchSlice.actions;
 

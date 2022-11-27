@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
+import SortSelect from 'components/MangaSearch/FiltersModal/SortSelect/SortSelect';
+import useAppSelector from 'hooks/useAppSelector';
+import useAppDispatch from 'hooks/useAppDispatch';
+import { updateModalParams, updateParams } from 'redux/slices/mangaSearchSlice';
 
 interface FiltersModalProps {
   isOpen: boolean;
@@ -8,7 +12,17 @@ interface FiltersModalProps {
 }
 
 function FiltersModal({ isOpen, handleModal, className }: FiltersModalProps) {
+  const { params, modalParams } = useAppSelector((state) => state.mangaSearchReducer);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(updateModalParams(params));
+    }
+  }, [isOpen]);
+
   const handleOk = () => {
+    dispatch(updateParams(modalParams));
     handleModal();
   };
 
@@ -23,7 +37,9 @@ function FiltersModal({ isOpen, handleModal, className }: FiltersModalProps) {
       onCancel={handleCancel}
       open={isOpen}
       title="Set filters"
-    />
+    >
+      <SortSelect />
+    </Modal>
   );
 }
 

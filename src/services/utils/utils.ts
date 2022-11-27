@@ -1,12 +1,8 @@
 import Manga from 'services/models/Manga';
-import { SEARCH_MANGA_PAGE_SIZE, UPLOADS_URL } from 'services/constants/constants';
+import { UPLOADS_URL } from 'services/constants/constants';
 import DataType from 'services/enums/DataType';
 import Cover from 'services/models/Cover';
 import Author from 'services/models/Author';
-import { SearchMangaParams } from 'services/queries/mangaQueries';
-import { getOffsetFromPage, getPageFromOffset } from 'services/utils/numberUtils';
-import Order from 'services/enums/Order';
-import OrderCategory from 'services/enums/OrderCategory';
 
 export type ImageSize = 256 | 512;
 
@@ -30,25 +26,3 @@ export const getChapterImageUrl = (
 ): string => (
   `${UPLOADS_URL}/${compressed ? 'data-saver' : 'data'}/${chapterHash}/${fileName}`
 );
-
-export const getSearchMangaQueryParams = (params: SearchMangaParams): Record<string, string> => {
-  const queryParams: Record<string, string> = {};
-  if (params.title) queryParams.title = params.title;
-  queryParams.page = params.offset
-    ? getPageFromOffset(params.offset, SEARCH_MANGA_PAGE_SIZE).toString()
-    : '1';
-  return queryParams;
-};
-
-export const getSearchMangaParamsFromQuery = (queryParams: URLSearchParams): SearchMangaParams => {
-  const page = queryParams.get('page');
-  const title = queryParams.get('title');
-  const params: SearchMangaParams = {
-    limit: SEARCH_MANGA_PAGE_SIZE,
-    includes: [DataType.COVER_ART, DataType.AUTHOR],
-    [OrderCategory.RATING]: Order.DESCENDING,
-    offset: page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0,
-  };
-  if (title) params.title = title;
-  return params;
-};

@@ -3,13 +3,13 @@ import { Space } from 'antd';
 import SearchFilters from 'components/MangaSearch/SearchFilters/SearchFilters';
 import styles from 'components/MangaSearch/MangaSearchPage.module.scss';
 import { useSearchParams } from 'react-router-dom';
-import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/utils';
 import useAppSelector from 'hooks/useAppSelector';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { updateParams } from 'redux/slices/mangaSearchSlice';
 import fetchManga from 'redux/async/fetchManga';
 import fetchStatistics from 'redux/async/fetchStatistics';
 import MangaList from 'components/MangaSearch/MangaList/MangaList';
+import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/paramsUtils';
 
 function MangaSearchPage() {
   const [queryParams, setQueryParams] = useSearchParams();

@@ -1,8 +1,16 @@
 import axios from 'axios';
 import { API_URL } from 'services/constants/constants';
+// import Languages from 'services/enums/Languages';
+import Chapter from 'services/models/Chapter';
+
+// interface GetChapterListParams {
+//   translatedLanguage?: Languages[],
+//   order?: any,
+// }
 
 interface GetChapterListResponse {
-
+  data: Chapter[],
+  total: number,
 }
 
 interface GetChapterResponse {
@@ -19,8 +27,11 @@ interface GetChapterImagesResponse {
   chapter: ChapterImages,
 }
 
-export const getChapterList = async (mangaId: string): Promise<GetChapterListResponse> => {
-  const response = await axios.get<GetChapterListResponse>(`${API_URL}/manga/${mangaId}/feed`);
+export const getChapterList = async (
+  mangaId: string,
+  params: any,
+): Promise<GetChapterListResponse> => {
+  const response = await axios.get<GetChapterListResponse>(`${API_URL}/manga/${mangaId}/feed`, { params });
   return response.data;
 };
 

@@ -55,9 +55,9 @@ function MangaList() {
     </Space>
   );
 
-  return mangaList.length
-    ? mangaWithPagination
-    : emptyMangaList;
+  return (!mangaList.length && !isLoading)
+    ? emptyMangaList
+    : mangaWithPagination;
 }
 
 export default MangaList;

@@ -6,10 +6,11 @@ import { useSearchParams } from 'react-router-dom';
 import useAppSelector from 'hooks/useAppSelector';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { updateParams } from 'redux/slices/mangaSearchSlice';
-import fetchManga from 'redux/async/fetchManga';
+import fetchMangaList from 'redux/async/fetchMangaList';
 import fetchStatistics from 'redux/async/fetchStatistics';
 import MangaList from 'components/MangaSearch/MangaList/MangaList';
 import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/paramsUtils';
+import Header from 'components/Header/Header';
 
 function MangaSearchPage() {
   const [queryParams, setQueryParams] = useSearchParams();
@@ -25,7 +26,7 @@ function MangaSearchPage() {
 
   useEffect(() => {
     if (params.includes) {
-      dispatch(fetchManga(params));
+      dispatch(fetchMangaList(params));
     }
     setQueryParams(getSearchMangaQueryParams(params));
   }, [params]);
@@ -39,12 +40,15 @@ function MangaSearchPage() {
   }, [mangaList]);
 
   return (
-    <div className={`${styles.main} container`}>
-      <Space direction="vertical" size="middle">
-        <SearchFilters />
-        <MangaList />
-      </Space>
-    </div>
+    <>
+      <Header />
+      <div className={`${styles.main} container`}>
+        <Space direction="vertical" size="middle">
+          <SearchFilters />
+          <MangaList />
+        </Space>
+      </div>
+    </>
   );
 }
 

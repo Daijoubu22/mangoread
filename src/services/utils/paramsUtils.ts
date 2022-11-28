@@ -23,13 +23,13 @@ export const getSearchMangaQueryParams = (params: SearchMangaParams): Record<str
 };
 
 export const getSearchMangaParamsFromQuery = (queryParams: URLSearchParams): SearchMangaParams => {
+  const params = defaultParams;
   const page = queryParams.get('page');
   const title = queryParams.get('title');
   const order = queryParams.get('order');
-  const params = defaultParams;
   params.offset = page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0;
-  if (title) params.title = title;
-  if (order) params.order = order as OrderWithDirection;
+  params.title = title || undefined;
+  params.order = order ? order as OrderWithDirection : undefined;
   return params;
 };
 

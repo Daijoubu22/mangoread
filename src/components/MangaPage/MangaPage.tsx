@@ -12,6 +12,11 @@ import MangaCoversSlider from 'components/MangaPage/MangaCoversSlider/MangaCover
 import { getCoverList } from 'services/queries/coverQueries';
 import Cover from 'services/models/Cover';
 import OrderWithDirection from 'services/enums/OrderWithDirection';
+import Header from 'components/Header/Header';
+import { getChapterList } from 'services/queries/chapterQueries';
+import Languages from 'services/enums/Languages';
+import useAppDispatch from 'hooks/useAppDispatch';
+import { setChapterToRead } from 'redux/slices/mangaPageSlice';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -23,6 +28,7 @@ function MangaPage() {
   if (!mangaId) {
     return <h1>Manga is not found(</h1>;
   }
+  const dispatch = useAppDispatch();
   const [manga, setManga] = useState<Manga>();
   const [statistics, setStatistics] = useState<Statistics>();
   const [coverList, setCoverList] = useState<Cover[]>();
@@ -45,10 +51,20 @@ function MangaPage() {
     getCoverList(getCoverListParams).then((response) => {
       setCoverList(response.data);
     });
+    getChapterList(mangaId, {
+      translatedLanguage: [Languages.EN],
+      includeExternalUrl: 0,
+      order: {
+        chapter: 'asc',
+      },
+    }).then((response) => {
+      dispatch(setChapterToRead(response.data[0]));
+    });
   }, []);
 
   return manga ? (
     <>
+      <Header />
       <BlurredBg
         imageUrl={getMangaCoverUrl(manga, 256)}
         blur={20}

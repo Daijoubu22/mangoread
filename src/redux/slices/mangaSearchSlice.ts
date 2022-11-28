@@ -17,7 +17,7 @@ const initialState: MangaSearchState = {
   mangaList: [],
   mangaTotalCount: 0,
   statistics: undefined,
-  isLoading: false,
+  isLoading: true,
   params: {},
   modalParams: {},
   error: '',

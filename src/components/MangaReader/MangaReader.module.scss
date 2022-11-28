@@ -8,4 +8,10 @@
   align-items: center;
   background-color: black;
   overflow: hidden;
+  :global(.visible) {
+    opacity: 1;
+  }
+  :global(.hidden) {
+    opacity: 0;
+  }
 }

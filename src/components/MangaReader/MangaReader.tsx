@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { getChapterImages } from 'services/queries/chapterQueries';
-import { MOCK_CHAPTER_ID } from 'services/constants/constants';
-import { getChapterImageUrl } from 'services/utils/utils';
+import React, { useEffect } from 'react';
 import ChapterImage from 'components/MangaReader/ChapterImage/ChapterImage';
 import Player from 'components/MangaReader/Player/Player';
 import useAppSelector from 'hooks/useAppSelector';
+import fetchChapterImages from 'redux/async/fetchChapterImages';
+import useAppDispatch from 'hooks/useAppDispatch';
+import { useParams } from 'react-router-dom';
 import styles from './MangaReader.module.scss';
 
+type MangaReaderParams = {
+  id: string;
+};
+
 function MangaReader() {
-  const [chapterImageUrls, setChapterImageUrls] = useState<string[]>();
-  const { pageNumber } = useAppSelector((state) => state.mangaReaderReducer);
+  const { id: chapterId } = useParams<MangaReaderParams>();
+  if (!chapterId) {
+    return <h1>Chapter is not found(</h1>;
+  }
+  const { pageNumber, chapterImageUrls } = useAppSelector((state) => state.mangaReaderReducer);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getChapterImages(MOCK_CHAPTER_ID).then((response) => {
-      setChapterImageUrls(response.dataSaver.map((item) => (
-        getChapterImageUrl(response.hash, item, true)
-      )));
-    });
+    dispatch(fetchChapterImages(chapterId));
   }, []);
 
   if (!chapterImageUrls) {
@@ -25,7 +29,12 @@ function MangaReader() {
 
   return (
     <div className={styles.main}>
-      <ChapterImage url={chapterImageUrls[pageNumber]} />
+      {chapterImageUrls.map((item, index) => (
+        <ChapterImage
+          className={index === pageNumber ? 'visible' : 'hidden'}
+          url={item}
+        />
+      ))}
       <Player />
     </div>
   );

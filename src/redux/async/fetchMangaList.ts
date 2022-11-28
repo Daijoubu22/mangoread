@@ -3,7 +3,7 @@ import { mangaFetching, fetchingError, mangaFetchingSuccess } from 'redux/slices
 import { getMangaList, SearchMangaParams } from 'services/queries/mangaQueries';
 import { getErrorMessage } from 'services/utils/stringUtils';
 
-const fetchManga = (params: SearchMangaParams) => async (dispatch: AppDispatch) => {
+const fetchMangaList = (params: SearchMangaParams) => async (dispatch: AppDispatch) => {
   try {
     dispatch(mangaFetching());
     const response = await getMangaList(params);
@@ -13,4 +13,4 @@ const fetchManga = (params: SearchMangaParams) => async (dispatch: AppDispatch) 
   }
 };
 
-export default fetchManga;
+export default fetchMangaList;

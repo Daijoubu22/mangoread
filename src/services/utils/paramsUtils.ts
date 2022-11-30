@@ -29,7 +29,7 @@ export const getSearchMangaParamsFromQuery = (queryParams: URLSearchParams): Sea
   const order = queryParams.get('order');
   params.offset = page ? getOffsetFromPage(Number(page), SEARCH_MANGA_PAGE_SIZE) : 0;
   params.title = title || undefined;
-  params.order = order ? order as OrderWithDirection : undefined;
+  if (order) params.order = order as OrderWithDirection;
   return params;
 };
 

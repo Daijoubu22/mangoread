@@ -5,16 +5,16 @@ interface BlurredBgProps {
   imageUrl: string;
   blur?: number;
   brightness?: number;
-  style?: React.CSSProperties;
   children?: React.ReactNode;
+  className?: string;
 }
 
 function BlurredBg({
   imageUrl,
   blur,
   brightness,
-  style,
   children,
+  className,
 }: BlurredBgProps) {
   const blurFilter = blur ? `blur(${blur}px)` : '';
   const brightnessFilter = brightness ? `brightness(${brightness})` : '';
@@ -29,10 +29,7 @@ function BlurredBg({
   );
 
   return (
-    <div
-      className={styles.main}
-      style={style}
-    >
+    <div className={`${styles.main} ${className}`}>
       {bg}
       {children}
     </div>
@@ -42,8 +39,8 @@ function BlurredBg({
 BlurredBg.defaultProps = {
   blur: undefined,
   brightness: undefined,
-  style: {},
   children: undefined,
+  className: undefined,
 };
 
 export default BlurredBg;

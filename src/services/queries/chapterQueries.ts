@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { API_URL } from 'services/constants/constants';
-// import Languages from 'services/enums/Languages';
+import Languages from 'services/enums/Languages';
 import Chapter from 'services/models/Chapter';
+import OrderWithDirection from 'services/enums/OrderWithDirection';
+import { transformParamsForRequest } from 'services/utils/paramsUtils';
 
-// interface GetChapterListParams {
-//   translatedLanguage?: Languages[],
-//   order?: any,
-// }
+interface GetChapterListParams {
+  translatedLanguage?: Languages[],
+  order?: OrderWithDirection,
+  includeExternalUrl?: number,
+}
 
 interface GetChapterListResponse {
   data: Chapter[],
@@ -29,9 +32,12 @@ interface GetChapterImagesResponse {
 
 export const getChapterList = async (
   mangaId: string,
-  params: any,
+  params: GetChapterListParams,
 ): Promise<GetChapterListResponse> => {
-  const response = await axios.get<GetChapterListResponse>(`${API_URL}/manga/${mangaId}/feed`, { params });
+  const response = await axios.get<GetChapterListResponse>(
+    `${API_URL}/manga/${mangaId}/feed`,
+    { params: transformParamsForRequest(params) },
+  );
   return response.data;
 };
 

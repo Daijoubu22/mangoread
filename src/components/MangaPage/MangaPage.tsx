@@ -17,6 +17,8 @@ import { getChapterList } from 'services/queries/chapterQueries';
 import Languages from 'services/enums/Languages';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { setChapterToRead } from 'redux/slices/mangaPageSlice';
+import SelectGroupModal from 'components/MangaPage/SelectGroupModal/SelectGroupModal';
+import useAppSelector from 'hooks/useAppSelector';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -28,6 +30,7 @@ function MangaPage() {
   if (!mangaId) {
     return <h1>Manga is not found(</h1>;
   }
+  const { isModalOpen } = useAppSelector((state) => state.mangaPageReducer);
   const dispatch = useAppDispatch();
   const [manga, setManga] = useState<Manga>();
   const [statistics, setStatistics] = useState<Statistics>();
@@ -54,9 +57,7 @@ function MangaPage() {
     getChapterList(mangaId, {
       translatedLanguage: [Languages.EN],
       includeExternalUrl: 0,
-      order: {
-        chapter: 'asc',
-      },
+      order: OrderWithDirection.CHAPTER_ASCENDING,
     }).then((response) => {
       dispatch(setChapterToRead(response.data[0]));
     });
@@ -69,11 +70,7 @@ function MangaPage() {
         imageUrl={getMangaCoverUrl(manga, 256)}
         blur={20}
         brightness={0.7}
-        style={{
-          width: '100%',
-          height: '800px',
-          position: 'fixed',
-        }}
+        className={styles.bg}
       />
       <div className={styles.main}>
         <div className="container">
@@ -85,6 +82,7 @@ function MangaPage() {
           {coverList?.length && <MangaCoversSlider manga={manga} coverList={coverList} />}
         </div>
       </div>
+      <SelectGroupModal isOpen={isModalOpen} />
     </>
   ) : null;
 }

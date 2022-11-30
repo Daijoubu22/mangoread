@@ -1,7 +1,8 @@
 @use 'src/scss/variables';
 
 .main {
-  position: fixed;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: variables.$headerHeight;
   background-color: variables.$bgPrimaryColor;

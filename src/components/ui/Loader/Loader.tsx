@@ -12,6 +12,7 @@ function Loader({ isVisible, className }: LoaderProps) {
   const transition = useTransition(isVisible, {
     enter: { opacity: 1 },
     leave: { opacity: 0 },
+    delay: 200,
   });
 
   const loaderCircle = (

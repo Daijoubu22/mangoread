@@ -7,6 +7,7 @@ import useAppDispatch from 'hooks/useAppDispatch';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { setPageNumber } from 'redux/slices/mangaReaderSlice';
 import Loader from 'components/ui/Loader/Loader';
+import fetchChapter from 'redux/async/mangaReader/fetchChapter';
 import styles from './MangaReader.module.scss';
 
 type MangaReaderParams = {
@@ -29,7 +30,7 @@ function MangaReader() {
   const getPageNumberFromQuery = (): number => {
     const pageNumberString = queryParams.get('page');
     if (!pageNumberString) {
-      return 0;
+      return 1;
     }
     return Number(pageNumberString);
   };
@@ -37,7 +38,8 @@ function MangaReader() {
   useEffect(() => {
     dispatch(setPageNumber(getPageNumberFromQuery()));
     dispatch(fetchChapterImages(chapterId));
-  }, []);
+    dispatch(fetchChapter(chapterId));
+  }, [chapterId]);
 
   useEffect(() => {
     setQueryParams({ page: pageNumber.toString() });
@@ -53,7 +55,7 @@ function MangaReader() {
       <div className={styles.main}>
         {chapterImageUrls.map((item, index) => (
           <ChapterImage
-            className={index === pageNumber ? 'visible' : 'hidden'}
+            className={index === pageNumber - 1 ? 'visible' : 'hidden'}
             url={item}
             key={item}
           />

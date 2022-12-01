@@ -15,5 +15,5 @@ export default interface Manga {
   }
   id: string;
   relationships: Array<Cover | Author>;
-  type: DataType,
+  type: DataType.MANGA,
 }

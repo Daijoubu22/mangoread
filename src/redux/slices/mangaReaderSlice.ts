@@ -24,7 +24,6 @@ const mangaReaderSlice = createSlice({
     fetchingChapterImages(state) {
       state.isLoading = true;
       state.chapterImageUrls = [];
-      state.pageNumber = 0;
     },
     fetchingChapterImagesSuccess(state, action: PayloadAction<ChapterImages>) {
       state.chapterImageUrls = action.payload.dataSaver.map((item) => (

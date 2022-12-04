@@ -13,7 +13,7 @@ function MangaActionButtons({ className }: MangaActionButtonsProps) {
 
   return (
     <Space className={`${styles.main} ${className}`} direction="horizontal">
-      <Link to={`/read/${chapterToRead?.id}`} target="_blank">
+      <Link to={`/read/${chapterToRead?.id}`}>
         <Button className={`${styles.readButton} primaryButton`} size="large">Read!</Button>
       </Link>
       <Button size="large">Chapters</Button>

@@ -6,16 +6,20 @@ import MangaPage from 'components/MangaPage/MangaPage';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MangaReader from 'components/MangaReader/MangaReader';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from 'components/errorHandling/ErrorFallback';
 
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<MangaSearchPage />} />
-        <Route path="/manga/:id" element={<MangaPage />} />
-        <Route path="/read/:id" element={<MangaReader />} />
-      </Routes>
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<MangaSearchPage />} />
+          <Route path="/manga/:id" element={<MangaPage />} />
+          <Route path="/read/:id" element={<MangaReader />} />
+        </Routes>
+      </div>
+    </ErrorBoundary>
   );
 }
 

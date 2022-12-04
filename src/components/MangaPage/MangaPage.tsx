@@ -19,6 +19,7 @@ import useAppDispatch from 'hooks/useAppDispatch';
 import { setChapterToRead } from 'redux/slices/mangaPageSlice';
 import SelectGroupModal from 'components/MangaPage/SelectGroupModal/SelectGroupModal';
 import useAppSelector from 'hooks/useAppSelector';
+import Errors from 'services/enums/Errors';
 import styles from './MangaPage.module.scss';
 
 type MangaPageParams = {
@@ -28,7 +29,7 @@ type MangaPageParams = {
 function MangaPage() {
   const { id: mangaId } = useParams<MangaPageParams>();
   if (!mangaId) {
-    return <h1>Manga is not found(</h1>;
+    throw new Error(Errors.MANGA_NOT_FOUND);
   }
   const { isModalOpen } = useAppSelector((state) => state.mangaPageReducer);
   const dispatch = useAppDispatch();

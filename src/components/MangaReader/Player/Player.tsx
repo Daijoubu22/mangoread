@@ -3,7 +3,7 @@ import useAppSelector from 'hooks/useAppSelector';
 import useAppDispatch from 'hooks/useAppDispatch';
 import { setPageNumber } from 'redux/slices/mangaReaderSlice';
 import { useNavigate } from 'react-router-dom';
-import { getNextChapterId, getPrevChapterId } from 'services/utils/chapterUtils';
+import { getChaptersManga, getNextChapterId, getPrevChapterId } from 'services/utils/chapterUtils';
 import styles from './Player.module.scss';
 
 function Player() {
@@ -23,7 +23,12 @@ function Player() {
       dispatch(setPageNumber(pageNumber - 1));
       return;
     }
-    navigate(`/read/${getPrevChapterId(currentChapter, volumes)}`);
+    const prevChapterId = getPrevChapterId(currentChapter, volumes);
+    if (!prevChapterId) {
+      navigate(`/manga/${getChaptersManga(currentChapter).id}`);
+      return;
+    }
+    navigate(`/read/${prevChapterId}`);
   };
 
   const onNext = (): void => {
@@ -34,7 +39,12 @@ function Player() {
       dispatch(setPageNumber(pageNumber + 1));
       return;
     }
-    navigate(`/read/${getNextChapterId(currentChapter, volumes)}`);
+    const nextChapterId = getNextChapterId(currentChapter, volumes);
+    if (!nextChapterId) {
+      navigate(`/manga/${getChaptersManga(currentChapter).id}`);
+      return;
+    }
+    navigate(`/read/${nextChapterId}`);
   };
 
   if (!currentChapter || !volumes) {

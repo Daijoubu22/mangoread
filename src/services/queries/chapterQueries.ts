@@ -33,7 +33,8 @@ interface GetChapterImagesResponse {
 }
 
 interface GetVolumesParams {
-  groups: string[],
+  groups?: string[],
+  translatedLanguage?: Languages[],
 }
 
 interface GetVolumesResponse {

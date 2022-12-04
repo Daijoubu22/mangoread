@@ -8,6 +8,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { setPageNumber } from 'redux/slices/mangaReaderSlice';
 import Loader from 'components/ui/Loader/Loader';
 import fetchChapter from 'redux/async/mangaReader/fetchChapter';
+import { saveReadingProgressToLC } from 'services/utils/localStorageUtils';
 import styles from './MangaReader.module.scss';
 
 type MangaReaderParams = {
@@ -24,6 +25,7 @@ function MangaReader() {
     pageNumber,
     chapterImageUrls,
     isLoading,
+    currentChapter,
   } = useAppSelector((state) => state.mangaReaderReducer);
   const dispatch = useAppDispatch();
 
@@ -43,6 +45,9 @@ function MangaReader() {
 
   useEffect(() => {
     setQueryParams({ page: pageNumber.toString() });
+    if (currentChapter) {
+      saveReadingProgressToLC(currentChapter, pageNumber);
+    }
   }, [pageNumber]);
 
   if (!chapterImageUrls) {

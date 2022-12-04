@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getManga, GetMangaParams } from 'services/queries/mangaQueries';
-import Manga from 'services/models/Manga';
 import { getMangaCoverUrl } from 'services/utils/utils';
 import DataType from 'services/enums/DataType';
 import BlurredBg from 'components/ui/BlurredBg/BlurredBg';
@@ -16,7 +15,7 @@ import Header from 'components/Header/Header';
 import { getChapterList } from 'services/queries/chapterQueries';
 import Languages from 'services/enums/Languages';
 import useAppDispatch from 'hooks/useAppDispatch';
-import { setChapterToRead } from 'redux/slices/mangaPageSlice';
+import { setChapterToRead, setManga } from 'redux/slices/mangaPageSlice';
 import SelectGroupModal from 'components/MangaPage/SelectGroupModal/SelectGroupModal';
 import useAppSelector from 'hooks/useAppSelector';
 import Errors from 'services/enums/Errors';
@@ -31,9 +30,11 @@ function MangaPage() {
   if (!mangaId) {
     throw new Error(Errors.MANGA_NOT_FOUND);
   }
-  const { isModalOpen } = useAppSelector((state) => state.mangaPageReducer);
+  const {
+    manga,
+    isModalOpen,
+  } = useAppSelector((state) => state.mangaPageReducer);
   const dispatch = useAppDispatch();
-  const [manga, setManga] = useState<Manga>();
   const [statistics, setStatistics] = useState<Statistics>();
   const [coverList, setCoverList] = useState<Cover[]>();
   const getMangaParams = {
@@ -47,7 +48,7 @@ function MangaPage() {
       limit: 100,
     };
     getManga(mangaId, getMangaParams).then((response) => {
-      setManga(response.data);
+      dispatch(setManga(response.data));
     });
     getStatistics({ manga: [mangaId] }).then((response) => {
       setStatistics(response[mangaId]);

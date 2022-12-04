@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAppSelector from 'hooks/useAppSelector';
 import unavailableFeature from 'services/utils/unavailableFeature';
+import { getReadingProgressFromLC } from 'services/utils/localStorageUtils';
+import Manga from 'services/models/Manga';
 import styles from './MangaActionButtons.module.scss';
 
 interface MangaActionButtonsProps {
@@ -10,13 +12,28 @@ interface MangaActionButtonsProps {
 }
 
 function MangaActionButtons({ className }: MangaActionButtonsProps) {
-  const { chapterToRead } = useAppSelector((state) => state.mangaPageReducer);
+  const { manga, chapterToRead } = useAppSelector((state) => state.mangaPageReducer);
+  const navigate = useNavigate();
+
+  const startRead = () => {
+    const readingProgress = getReadingProgressFromLC(manga as Manga);
+    const chapter = readingProgress ? readingProgress.chapter : chapterToRead?.id;
+    const page = readingProgress ? readingProgress.page : 1;
+    navigate({
+      pathname: `/read/${chapter}`,
+      search: `?page=${page}`,
+    });
+  };
 
   return (
     <Space className={`${styles.main} ${className}`} direction="horizontal">
-      <Link to={`/read/${chapterToRead?.id}`}>
-        <Button className={`${styles.readButton} primaryButton`} size="large">Read!</Button>
-      </Link>
+      <Button
+        className={`${styles.readButton} primaryButton`}
+        size="large"
+        onClick={startRead}
+      >
+        Read!
+      </Button>
       <Button size="large" onClick={unavailableFeature}>Chapters</Button>
       <Button size="large" onClick={unavailableFeature}>Follow</Button>
     </Space>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import useAppSelector from 'hooks/useAppSelector';
+import unavailableFeature from 'services/utils/unavailableFeature';
 import styles from './MangaActionButtons.module.scss';
 
 interface MangaActionButtonsProps {
@@ -16,8 +17,8 @@ function MangaActionButtons({ className }: MangaActionButtonsProps) {
       <Link to={`/read/${chapterToRead?.id}`}>
         <Button className={`${styles.readButton} primaryButton`} size="large">Read!</Button>
       </Link>
-      <Button size="large">Chapters</Button>
-      <Button size="large">Follow</Button>
+      <Button size="large" onClick={unavailableFeature}>Chapters</Button>
+      <Button size="large" onClick={unavailableFeature}>Follow</Button>
     </Space>
   );
 }

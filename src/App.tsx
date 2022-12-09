@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MangaSearchPage from 'components/MangaSearch/MangaSearchPage';
 import './App.less';
 import { Route, Routes } from 'react-router-dom';
@@ -8,8 +8,13 @@ import 'slick-carousel/slick/slick-theme.css';
 import MangaReader from 'components/MangaReader/MangaReader';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from 'components/errorHandling/ErrorFallback';
+import { hidePreloader } from 'services/utils/preloader';
 
 function App() {
+  useEffect(() => {
+    hidePreloader();
+  }, []);
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <div className="App">

@@ -1,0 +1,102 @@
+:root {
+  --manga-grow-duration: 1.5s;
+  --leaf-grow-duration: 1s;
+  --right-leaf-delay: 0.4s;
+  --left-leaf-delay: 0.7s;
+  --timing-function: cubic-bezier(1,0,.55,1.07);
+}
+
+.preloader {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #090909;
+  transition: opacity 1s;
+}
+
+.preloader_hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader__logo {
+  opacity: 0;
+  animation-name: manga-grow, mango-sway;
+  animation-duration: var(--manga-grow-duration), 2s;
+  animation-delay: 0s, var(--manga-grow-duration);
+  animation-timing-function: var(--timing-function), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards;
+}
+
+#right-leaf, #left-leaf {
+  transform: scale(0);
+  animation-name: leaf-grow, leaf-sway;
+  animation-duration: var(--leaf-grow-duration), 2s;
+  animation-timing-function: var(--timing-function), ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1, infinite;
+  transform-box: fill-box;
+}
+
+#right-leaf {
+  animation-delay: var(--right-leaf-delay), calc(var(--leaf-grow-duration) + var(--right-leaf-delay));
+  transform-origin: bottom left;
+}
+
+#left-leaf {
+  animation-delay: var(--left-leaf-delay), calc(var(--leaf-grow-duration) + var(--left-leaf-delay));
+  transform-origin: bottom right;
+}
+
+@keyframes manga-grow {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes leaf-grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mango-sway {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: translateY(10px) rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes leaf-sway {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}

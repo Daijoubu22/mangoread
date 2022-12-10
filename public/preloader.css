@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   background-color: #090909;
-  transition: opacity 1s;
+  transition: opacity 0.5s;
 }
 
 .preloader_hidden {

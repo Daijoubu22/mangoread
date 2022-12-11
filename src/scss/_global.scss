@@ -17,6 +17,7 @@ li {
 
 .App {
   min-height: 100vh;
+  overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
   background-color: variables.$bgPrimaryColor;
   color: variables.$textPrimaryColor;
@@ -27,6 +28,9 @@ li {
   max-width: 1000px;
   height: 100%;
   margin: 0 auto;
+  @media screen and (min-width: 600px) {
+    width: 90%;
+  }
 }
 
 .primaryButton {

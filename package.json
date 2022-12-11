@@ -2,6 +2,7 @@
   "name": "mangoread",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://daijoubu22.github.io/mangoread/",
   "dependencies": {
     "@craco/craco": "^7.0.0",
     "@reduxjs/toolkit": "^1.9.0",
@@ -22,6 +23,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react-hooks": "4.3.0",
+    "gh-pages": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "query-string": "^7.1.1",
     "react": "^18.2.0",
@@ -42,7 +44,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "yarn build"
   },
   "eslintConfig": {
     "extends": [

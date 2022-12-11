@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/mangoread/static/css/main.a01a7115.css",
+    "main.js": "/mangoread/static/js/main.76f17ff9.js",
+    "index.html": "/mangoread/index.html",
+    "static/media/slick.svg": "/mangoread/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/mangoread/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/mangoread/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/mangoread/static/media/slick.295183786cd8a1389865.woff",
+    "static/media/logo.svg": "/mangoread/static/media/logo.50cba30f4d4d2a802a42c44213ef61a0.svg",
+    "static/media/heart-full.svg": "/mangoread/static/media/heart-full.88d3ef38f33f458e17ba9972aa9c7490.svg",
+    "static/media/star-full.svg": "/mangoread/static/media/star-full.4a1dbafe3842c842425051b1fac931e9.svg",
+    "main.a01a7115.css.map": "/mangoread/static/css/main.a01a7115.css.map",
+    "main.76f17ff9.js.map": "/mangoread/static/js/main.76f17ff9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a01a7115.css",
+    "static/js/main.76f17ff9.js"
+  ]
+}

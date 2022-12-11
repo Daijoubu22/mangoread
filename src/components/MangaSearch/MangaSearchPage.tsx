@@ -11,6 +11,7 @@ import fetchStatistics from 'redux/async/mangaSearch/fetchStatistics';
 import MangaList from 'components/MangaSearch/MangaList/MangaList';
 import { getSearchMangaParamsFromQuery, getSearchMangaQueryParams } from 'services/utils/paramsUtils';
 import Header from 'components/Header/Header';
+import MangaSearchBg from 'components/MangaSearch/MangaSearchBg/MangaSearchBg';
 
 function MangaSearchPage() {
   const [queryParams, setQueryParams] = useSearchParams();
@@ -41,6 +42,7 @@ function MangaSearchPage() {
 
   return (
     <>
+      <MangaSearchBg />
       <Header />
       <div className={`${styles.main} container`}>
         <Space direction="vertical" size="middle">

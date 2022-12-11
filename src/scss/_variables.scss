@@ -8,9 +8,13 @@ $mangoYellowColor: #FFE600;
 $mangoGreenColor: #77D400;
 $mangoOrangeColor: #FF6B00;
 $mangoGradient: linear-gradient(45deg, $mangoGreenColor 0%, $mangoYellowColor 50%, $mangoOrangeColor 100%);
+$bgGradient: linear-gradient(45deg, #000000 0%, #141414 100%);
 
 // Effects
-$mangoShadow: 0 0 16px 0 $mangoYellowColor;
+$mangoShadow: 0 0 10px 0 $mangoYellowColor;
 
 // Sizes
 $headerHeight: 48px;
+
+// Other
+$mangaItemBorderRadius: 16px;

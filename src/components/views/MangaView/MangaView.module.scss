@@ -1,5 +1,10 @@
+@use 'src/scss/variables';
+
 .main {
   display: flex;
+  border-radius: variables.$mangaItemBorderRadius;
+  overflow: hidden;
+  background-color: variables.$bgSecondaryColor;
 }
 
 .cover {

@@ -9,6 +9,7 @@ import MangaReader from 'components/MangaReader/MangaReader';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from 'components/errorHandling/ErrorFallback';
 import { hidePreloader } from 'services/utils/preloader';
+import Footer from 'components/Footer/Footer';
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/manga/:id" element={<MangaPage />} />
           <Route path="/read/:id" element={<MangaReader />} />
         </Routes>
+        <Footer />
       </div>
     </ErrorBoundary>
   );

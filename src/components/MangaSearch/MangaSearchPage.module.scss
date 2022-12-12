@@ -1,8 +1,9 @@
 @use 'src/scss/variables';
 
 .main {
+  flex: 1;
   padding-top: 128px;
-  margin-bottom: 24px;
+  padding-bottom: 24px;
 }
 
 .skeleton {

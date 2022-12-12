@@ -1,0 +1,95 @@
+.preloader {
+  position: fixed;
+  visibility: visible !important;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #090909;
+  transition: opacity 0.5s;
+}
+
+.preloader_hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader__logo {
+  opacity: 0;
+  animation-name: manga-grow, mango-sway;
+  animation-duration: 1.5s, 2s;
+  animation-delay: 0s, 1.5s;
+  animation-timing-function: cubic-bezier(1,0,.55,1.07), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards;
+}
+
+#right-leaf, #left-leaf {
+  transform: scale(0);
+  animation-name: leaf-grow, leaf-sway;
+  animation-duration: 1s, 2s;
+  animation-timing-function: cubic-bezier(1,0,.55,1.07), ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1, infinite;
+  transform-box: fill-box;
+}
+
+#right-leaf {
+  animation-delay: 0.4s, calc(1.4s);
+  transform-origin: bottom left;
+}
+
+#left-leaf {
+  animation-delay: 0.7s, calc(1.7s);
+  transform-origin: bottom right;
+}
+
+@keyframes manga-grow {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes leaf-grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mango-sway {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: translateY(10px) rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes leaf-sway {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
